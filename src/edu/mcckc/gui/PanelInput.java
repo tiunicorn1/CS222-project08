@@ -1,6 +1,7 @@
 package edu.mcckc.gui;
 
 import edu.mcckc.domain.TrigonometryManager;
+import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,15 +24,33 @@ public class PanelInput extends JPanel implements ActionListener
 
     public void setTrigonometryManagerReference(TrigonometryManager trigManager)
     {
+        this.trigManager = trigManager;
     }
 
     public void setPanelDisplayReference(PanelDisplay pnlDisplay)
     {
+        this.pnlDisplay = pnlDisplay;
     }
 
 
     public PanelInput()
     {
+        datTreeHeight = new JDataEntry("Tree Height: ", 10, "0");
+        datTreeDistance = new JDataEntry("Tree Distance: ", 10, "0");
+        datAngleAlpha = new JDataEntry("Angle Alpha: ", 10, "0");
+        btnCalc = new JButton("Calc");
+
+        btnCalc.setActionCommand("add");
+        btnCalc.addActionListener(this);
+
+        setLayout(new GridLayout(4, 2));
+        add(datTreeHeight);
+        add(datTreeDistance);
+        add(datAngleAlpha);
+
+        add(btnCalc);
+
+
     }
 
 
@@ -40,9 +59,12 @@ public class PanelInput extends JPanel implements ActionListener
     {
         try
         {
+            trigManager.calcTrigValues(datAngleAlpha.getDouble(), datTreeHeight.getDouble(), datTreeDistance.getDouble() );
+            pnlDisplay.calcTrigValues(datAngleAlpha.getDouble(), datTreeHeight.getDouble(), datTreeDistance.getDouble());
         }
         catch (Exception ex)
         {
+            Logger.getLogger(this.getClass()).debug(ex.toString());
         }
     }
 }

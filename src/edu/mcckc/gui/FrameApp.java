@@ -20,9 +20,20 @@ public class FrameApp extends JFrame
 
     public FrameApp()
     {
+        pnlInput = new PanelInput();
+        pnlDisplay = new PanelDisplay();
+        trigManager = new TrigonometryManager();
+
         lblImage = new JLabel(new ImageIcon("trig_info.png"));
 
 
+        pnlInput.setPanelDisplayReference(pnlDisplay);
+        pnlInput.setTrigonometryManagerReference(trigManager);
+        pnlDisplay.setTrigonometryManagerReference(trigManager);
+
+
+        add(pnlInput, BorderLayout.WEST);
+        add(pnlDisplay, BorderLayout.EAST);
         add(lblImage, BorderLayout.CENTER);
     }
 
